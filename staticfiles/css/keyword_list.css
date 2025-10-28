@@ -1,0 +1,80 @@
+/* === 全站背景與字體設定 === */
+body {
+    background-color: #D1DDDB; /* Pistachio */
+    color: #283B42;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* === 主標題設定 === */
+h2 {
+    color: #1D6A96;  /* Cerulean */
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* === 返回按鈕樣式統一化 === */
+.btn-secondary {
+    background-color: #283B42;
+    border-color: #283B42;
+}
+
+.btn-secondary:hover {
+    background-color: #1D6A96;
+    border-color: #1D6A96;
+}
+
+/* === 關鍵字項目樣式 === */
+.list-group-item {
+    background-color: white;
+    border: 2px solid #85B8CB;  /* Turquoise */
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #283B42;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.list-group-item:hover {
+    background-color: #85B8CB;
+    color: white;
+    transform: translateX(4px);
+}
+
+.list-group {
+    max-width: 600px;
+}
+
+/* === 關鍵字卡片排列 === */
+.keyword-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 自動換行排列 */
+  gap: 15px; /* 卡片間距 */
+  margin-top: 1rem;
+  justify-items: center; /* 置中排列 */
+}
+
+.keyword-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* 水平置中 */
+  text-align: center;       /* 文字置中 */
+  text-decoration: none;
+  background-color: #fff;
+  border: 2px solid #85B8CB;
+  border-radius: 12px;
+  color: #283B42;
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 0.9rem 1.4rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+
+.keyword-card:hover {
+  background-color: #1D6A96;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}

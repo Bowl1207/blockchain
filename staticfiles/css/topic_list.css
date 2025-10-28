@@ -1,0 +1,109 @@
+body {
+    background-color: #D1DDDB;
+    font-family: 'Helvetica Neue', sans-serif;
+    color: #283B42;
+}
+
+.intro-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.intro-box {
+    background-color: #85B8CB;
+    border-radius: 12px;
+    padding: 1rem 1rem;
+    text-align: center;
+}
+
+.intro-title {
+    color: #283B42; 
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.intro-subtitle {
+    color: #1D6A96;
+    margin-bottom: -1rem;
+}
+
+/* === 卡片樣式 === */
+.card {
+    max-width: 500px;
+    margin: auto;
+    padding: 0.75rem 1rem;
+    background-color: white;
+    border: 2px solid #85B8CB;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-color: #1D6A96;
+}
+
+h1, .card-title {
+    color: #283B42;
+    font-weight: bold;
+    text-align: center;
+}
+
+.bg-light {
+    background-color: #85B8CB !important;
+    color: white;
+    border-radius: 12px;
+}
+
+.text-muted {
+    color: #1D6A96 !important;
+}
+
+.card-text {
+    color: #283B42;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: #1D6A96;
+    border-color: #1D6A96;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #283B42; 
+    border-color: #283B42;
+}
+
+.card-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.card-group-custom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    justify-content: center;
+}
+
+/* 單一卡片欄位 */
+.card-group-custom > .col {
+    flex: 1 1 45%;
+    max-width: 500px;
+}
+
+/* 響應式適配（小螢幕一行一張卡） */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        max-width: 90%;
+    }
+}

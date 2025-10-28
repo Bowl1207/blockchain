@@ -1,0 +1,96 @@
+/* === 全站背景與字體設定 === */
+.gbk-container {
+  background-color: #D1DDDB; /* Pistachio */
+  font-family: 'Helvetica Neue', sans-serif;
+  line-height: 1.7;
+  padding: 24px;
+  color: #283B42; /* Spruce */
+}
+
+/* === 內容區塊：避免寬度太窄/太寬 === */
+.gbk-content {
+  max-width: 980px;
+}
+
+/* === 標題配色 === */
+.gbk-content h1,
+.gbk-content h2,
+.gbk-content h3 {
+  line-height: 1.3;
+  color: #1D6A96; /* Cerulean */
+  font-weight: bold;
+}
+
+/* === 圖片、表格 === */
+.gbk-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.gbk-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 16px 0;
+  background-color: white;
+  border: 2px solid #85B8CB; /* Turquoise */
+}
+
+.gbk-content th,
+.gbk-content td {
+  border: 1px solid #85B8CB; /* Turquoise */
+  padding: 6px 8px;
+  color: #283B42;
+}
+
+.gbk-content th {
+  background-color: #85B8CB;
+  color: white;
+}
+
+/* === 程式碼區塊 === */
+.gbk-content pre {
+  background: #ffffff;
+  border: 2px solid #85B8CB; /* Turquoise */
+  padding: 12px;
+  overflow: auto;
+  border-radius: 8px;
+  color: #283B42;
+}
+
+.gbk-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.95em;
+  color: #1D6A96; /* Cerulean */
+}
+
+/* === 連結樣式 === */
+.gbk-content a {
+  color: #1D6A96; /* Cerulean */
+  text-decoration: none;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.gbk-content a:hover {
+  color: white;
+  background-color: #85B8CB; /* Turquoise */
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+/* === 按鈕樣式統一化 === */
+.gbk-content .btn-secondary {
+  background-color: #283B42; /* Spruce */
+  border-color: #283B42;
+  color: white;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.gbk-content .btn-secondary:hover {
+  background-color: #1D6A96; /* Cerulean */
+  border-color: #1D6A96;
+}
+
+html, body {
+    height: 100%;
+    background-color: #D1DDDB; /* Pistachio */
+}

@@ -1,64 +1,45 @@
-import os
-from dotenv import load_dotenv
-import sys
-import faiss
-import django
-import numpy as np
+# aiAnswer.py（改成工具模組，不要有 while 與 django.setup）
+import os, numpy as np, faiss
+from django.conf import settings
 from sentence_transformers import SentenceTransformer
 import google.generativeai as genai
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-
-
-# ====== Django 初始化 ======
-project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "searchweb.settings")
-django.setup()
-
+from dotenv import load_dotenv
 from myapp.models import GitBookPage
 
-# ====== 載入 FAISS 索引與 ID 對照 ======
-index_path = os.path.join(project_path, "faiss_data", "gitbook_faiss.index")
-ids_path = os.path.join(project_path, "faiss_data", "gitbook_ids.npy")
+INDEX_PATH = os.path.join(settings.BASE_DIR, "faiss_data", "gitbook_faiss.index")
+IDS_PATH   = os.path.join(settings.BASE_DIR, "faiss_data", "gitbook_ids.npy")
 
-index = faiss.read_index(index_path)
-ids = np.load(ids_path)
+index = faiss.read_index(INDEX_PATH)
+ids = np.load(IDS_PATH)
+embedder = SentenceTransformer("BAAI/bge-m3")
 
-# 初始化模型
-embedding_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
-
-# 設定 Gemini API
 load_dotenv()
-api_key = os.getenv("GOOGLE_API_KEY")
-genai.configure(api_key=api_key)
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 llm = genai.GenerativeModel("gemini-2.5-flash")
 
-# ====== 使用者查詢 ======
-while True:
-    query = input("\n 請輸入你的問題（或輸入 q 離開）：")
-    if query.lower() in ["q", "quit", "exit"]:
-        print(" 結束對話。")
-        break
+INSTRUCTION = "為此句子產生檢索向量："
 
-    query_vector = embedding_model.encode([query])
-    D, I = index.search(query_vector, k=3)
+def get_summary_for_keyword(keyword: str, k: int = 5) -> str:
+    qtext = INSTRUCTION + keyword
+    qvec = embedder.encode([qtext], convert_to_numpy=True)
+    qvec = qvec / (np.linalg.norm(qvec, axis=1, keepdims=True) + 1e-12)
+    qvec = qvec.astype("float32")
 
-    # 取得對應的資料庫內容
-    retrieved_docs = []
+    k = min(k, index.ntotal if hasattr(index, "ntotal") else k)
+    D, I = index.search(qvec, k=k)
+
+    docs = []
     for idx in I[0]:
-        page_id = ids[idx]
-        try:
-            page = GitBookPage.objects.get(id=page_id)
-            retrieved_docs.append(page.content)
-        except GitBookPage.DoesNotExist:
-            continue
-    
-    # ====== 建立給 Gemini 的 prompt ======
-    context = "\n".join(retrieved_docs)
-    prompt = f"根據以下內容回答問題：\n{context}\n\n問題：{query}"
-    response = llm.generate_content(prompt)
+        if idx == -1: continue
+        page_id = int(ids[int(idx)])
+        page = GitBookPage.objects.filter(id=page_id).only("content").first()
+        if page and page.content:
+            docs.append(page.content)
 
-    print("\n AI 回答：\n", response.text)
+    if not docs:
+        return "目前找不到與此關鍵字相關的內容。"
 
+    context = "\n\n---\n\n".join(docs)
+    prompt = f"請統整與「{keyword}」相關內容並摘要：\n{context}"
+    resp = llm.generate_content(prompt)
+    return (resp.text or "").strip() or "AI 摘要生成失敗：回傳為空。"

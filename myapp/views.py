@@ -8,9 +8,13 @@ import faiss
 from django.conf import settings
 from sentence_transformers import SentenceTransformer
 from myapp.models import GitBookPage
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from scrapy.aiAnswer import get_summary_for_keyword
+
 
 # 載入模型與 index（為提升效能，放外層只初始化一次）
-model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+model = SentenceTransformer('BAAI/bge-m3')
 index_path = os.path.join(settings.BASE_DIR, "faiss_data", "gitbook_faiss.index")
 id_path = os.path.join(settings.BASE_DIR, "faiss_data", "gitbook_ids.npy")
 ids = np.load(id_path)
@@ -87,3 +91,10 @@ def gitbookpage(request, pk):
     page = get_object_or_404(GitBookPage, pk=pk)
     return render(request, "searchweb/gitbookpage.html", {"page": page})
 
+@require_GET
+def get_keyword_summary(request):
+    keyword = (request.GET.get("keyword") or "").strip()
+    if not keyword:
+        return JsonResponse({"error": "請提供 keyword 參數"}, status=400)
+    summary = get_summary_for_keyword(keyword, k=5)
+    return JsonResponse({"keyword": keyword, "summary": summary})

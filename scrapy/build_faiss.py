@@ -1,4 +1,4 @@
-# scrapy/build_faiss.py
+# scrapy/build_faiss.py 建立索引端
 
 import os
 import sys
@@ -18,8 +18,8 @@ from myapp.models import GitBookPage
 # 讀出所有內容
 pages = GitBookPage.objects.all()
 
-# 使用多語言小型模型（速度快、效果不錯）MiniLM-L12-v2')
-model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
+# 使用 BAAI/bge-m3 模型
+model = SentenceTransformer("BAAI/bge-m3")
 
 # 將所有內容轉為 list
 documents = [page.content for page in pages]
@@ -27,8 +27,14 @@ titles = [page.title for page in pages]
 ids = [page.id for page in pages]
 
 # 向量化
-print("正在進行向量轉換...")
-embeddings = model.encode(documents, convert_to_numpy=True, show_progress_bar=True)
+print("正在使用bge-m3進行向量轉換...")
+
+instruction = "為此句子產生檢索向量："
+docs_with_prompt = [instruction + doc for doc in documents]
+embeddings = model.encode(docs_with_prompt, convert_to_numpy=True, show_progress_bar=True)
+#正規化
+embeddings = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True) + 1e-12)
+
 
 # 建立 Faiss 索引
 dimension = embeddings.shape[1]
