@@ -1,0 +1,99 @@
+body {
+    background-color: #D1DDDB;
+    color: #283B42;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+h2 {
+    color: #1D6A96;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.btn-secondary {
+    background-color: #283B42;
+    border-color: #283B42;
+}
+
+.btn-secondary:hover {
+    background-color: #1D6A96;
+    border-color: #1D6A96;
+}
+
+.btn-topic {
+    background-color: #85B8CB;
+    border-color: #85B8CB;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-topic:hover {
+    background-color: #1D6A96;
+    border-color: #1D6A96;
+    color: #fff;
+}
+
+.text-muted {
+    color: #5c6e72 !important;
+}
+
+.question-card {
+    background-color: white;
+    border: 2px solid #85B8CB;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.question-card strong {
+    color: #1D6A96;
+}
+
+/* === 標籤樣式統一色調 === */
+.badge {
+    background-color: #1D6A96;
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.4em 0.6em;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.badge:hover {
+    background-color: #283B42;
+}
+
+
+.accordion-collapse {
+  overflow: hidden !important;  /* 允許內層內容滾動 */
+  max-height: none !important;       /* 解除外層高度限制 */
+}
+
+/*介紹文章區塊*/
+
+.accordion-body .scrollable-content {
+    max-height: 300px !important;     /* 固定高度，可依需求調整 */
+    overflow-y: scroll !important;      /* 強制垂直卷軸 */
+    overflow-x: hidden !important;
+    display: block !important;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    line-height: 1.8;
+    word-break: break-word;
+    margin-bottom: 1rem !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.scrollable-content::-webkit-scrollbar {
+  width: 8px;  /* 卷軸寬度 */
+}
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: #b0c4de;  /* 卷軸顏色 */
+  border-radius: 4px;
+}
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  background-color: #6c8ebf; /* 滑鼠滑過卷軸變色 */
+}
