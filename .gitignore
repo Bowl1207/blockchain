@@ -1,0 +1,13 @@
+# 忽略金鑰設定檔
+.env
+
+# 忽略 Python 暫存檔
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# 忽略虛擬環境
+venv/

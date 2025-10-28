@@ -1,4 +1,6 @@
-import os, sys
+import os
+from dotenv import load_dotenv
+import sys
 import faiss
 import django
 import numpy as np
@@ -27,7 +29,9 @@ ids = np.load(ids_path)
 embedding_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
 
 # 設定 Gemini API
-os.environ["GOOGLE_API_KEY"] = "AIzaSyBzZ3_CM_eUgjX8xrBHKmqLCQZ68tPrG7A"
+load_dotenv()
+api_key = os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=api_key)
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 llm = genai.GenerativeModel("gemini-2.5-flash")
 
