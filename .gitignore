@@ -11,3 +11,4 @@ __pycache__/
 
 # 忽略虛擬環境
 venv/
+staticfiles/

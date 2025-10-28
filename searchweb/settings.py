@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
+load_dotenv()  # 讀取 .env 或 Render 環境變數
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yg+vuh-y038vc1ixjspe9h6_%h(4kg@j8-k%irnhi1csdf-r4@'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 安全金鑰（SECRET_KEY）
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-secret-key")
+# 除錯模式（DEBUG）
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
